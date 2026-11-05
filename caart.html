@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shopping Cart | Loop & Blooms</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff9f6;
+    color: #63444b;
+}
+
+header {
+    background: #f7e2e5;
+    text-align: center;
+    padding: 20px 15px;
+}
+
+header h1 {
+    font-size: 42px;
+    font-weight: normal;
+    color: #914d66;
+    margin: 10px 0;
+}
+
+header p {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #805460;
+    line-height: 1.8;
+}
+
+nav {
+    background: #914d66;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+nav a:hover {
+    background: #ebb4c6;
+    color: #914d66;
+}
+
+h2 {
+    text-align: center;
+    color: #914d66;
+    margin: 25px 10px;
+}
+
+#cart-items {
+    max-width: 750px;
+    width: 100%;
+    margin: auto;
+    padding: 15px;
+}
+
+.cart-item {
+    background: white;
+    border: 1px solid #efd5d5;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    overflow-wrap: anywhere;
+}
+
+.cart-item h3 {
+    color: #914d66;
+}
+
+.remove-btn {
+    background: #914d66;
+    color: white;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background: #71364e;
+}
+
+.delivery-note {
+    text-align: center;
+    color: #71364e;
+}
+
+#total {
+    text-align: center;
+    font-size: 23px;
+    font-weight: bold;
+    color: #914d66;
+    margin: 25px 10px;
+}
+
+.place-order, .continue {
+    display: block;
+    width: fit-content;
+    max-width: calc(100% - 30px);
+    margin: 20px auto;
+    background: #914d66;
+    color: white;
+    padding: 13px 25px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.place-order:hover, .continue:hover {
+    background: #71364e;
+}
+
+.place-order:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+#orderForm {
+    display: none;
+    max-width: 450px;
+    width: calc(100% - 30px);
+    margin: 25px auto;
+    padding: 20px;
+    background: white;
+    border: 1px solid #efd5d5;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px #eadada;
+}
+
+#orderForm label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+#orderForm input,
+#orderForm textarea {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    margin-top: 7px;
+    border: 1px solid #d9a9b5;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+#orderForm textarea {
+    resize: vertical;
+}
+
+#orderSummary {
+    background: #fff0f3;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+#orderTotal {
+    text-align: center;
+    color: #914d66;
+}
+
+footer {
+    background: #914d66;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+/* TABLET RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 18px 12px;
+    }
+
+    header h1 {
+        font-size: 36px;
+    }
+
+    header p {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+
+    nav {
+        gap: 6px;
+        padding: 9px 6px;
+    }
+
+    nav a {
+        padding: 9px 10px;
+        font-size: 14px;
+    }
+
+    #cart-items {
+        padding: 12px;
+    }
+
+    .cart-item {
+        padding: 15px;
+    }
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 500px) {
+
+    header {
+        padding: 15px 10px;
+    }
+
+    header h1 {
+        font-size: clamp(25px, 7vw, 30px);
+        line-height: 1.35;
+    }
+
+    header p {
+        font-size: 9px;
+        letter-spacing: 0.7px;
+        line-height: 1.7;
+        margin: 8px 0 0;
+    }
+
+    nav {
+        gap: 5px;
+        padding: 8px 5px;
+    }
+
+    nav a {
+        padding: 8px 9px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin: 20px 8px;
+    }
+
+    .cart-item {
+        gap: 10px;
+        padding: 14px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .cart-item h3 {
+        font-size: 17px;
+        margin: 0 0 8px;
+    }
+
+    .cart-item p {
+        font-size: 14px;
+        margin: 6px 0;
+    }
+
+    .remove-btn {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .delivery-note {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    #total {
+        font-size: 20px;
+        margin: 20px 8px;
+    }
+
+    .place-order,
+    .continue {
+        width: calc(100% - 36px);
+        max-width: 360px;
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+
+    #orderForm {
+        width: calc(100% - 24px);
+        margin: 18px auto;
+        padding: 15px;
+    }
+
+    #orderForm input,
+    #orderForm textarea {
+        font-size: 16px;
+    }
+
+    #orderSummary {
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 16px 10px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    nav a {
+        padding: 7px;
+        font-size: 11px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 8px;
+    }
+
+    #total {
+        font-size: 18px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>🌷 𝙻𝚘𝚘𝚙 & 𝙱𝚕𝚘𝚘𝚖 🌷</h1>
+
+    <p>♡ HANDMADE WITH LOVE, ONE LOOP AT A TIME, STITCH WITH LOVE AND CARE ♡</p>
+
+</header>
+
+<nav>
+
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="home.html">Shopping</a>
+    <a href="crochet.html">Customize Products</a>
+    <a href="caart.html">Cart 🛒</a>
+
+</nav>
+
+<h2>Your Shopping Cart 🌸</h2>
+
+<div id="cart-items"></div>
+
+<p class="delivery-note">
+    💕 Delivery Charges: Rs. 200 💕
+</p>
+
+<div id="total">Total: Rs. 0</div>
+
+<button type="button" class="place-order" onclick="openOrderForm()">
+    Place Order 🌷
+</button>
+
+<div id="orderForm">
+
+    <h2>🌷 Place Your Order</h2>
+
+    <form id="checkoutForm">
+
+        <label for="customerName">Full Name</label>
+        <input type="text" id="customerName" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required>
+
+        <label for="address">Complete Home Address</label>
+
+        <textarea id="address" rows="3"
+            placeholder="House number, street, city..."
+            required></textarea>
+
+        <h3>Your Products</h3>
+
+        <div id="orderSummary"></div>
+
+        <p>Delivery Charges: Rs. 200</p>
+
+        <h3 id="orderTotal">Total: Rs. 0</h3>
+
+        <button type="submit" class="place-order" id="confirmBtn">
+            Confirm Order 💕
+        </button>
+
+    </form>
+
+</div>
+
+<a href="home.html" class="continue">
+    Continue Shopping 🌸
+</a>
+
+<footer>
+    <p>© 2026 Loop &amp; Blooms | Handmade with Love ♡</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+
+const PUBLIC_KEY = "PedaOyffr7ysj3tQg";
+const SERVICE_ID = "service_nicp4h7";
+const TEMPLATE_ID = "template_g428ons";
+
+function getCart() {
+
+    try {
+
+        const cart = JSON.parse(localStorage.getItem("loopCart"));
+
+        return Array.isArray(cart) ? cart : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+function saveCart(cart) {
+
+    localStorage.setItem("loopCart", JSON.stringify(cart));
+
+}
+
+function calculateSubtotal(cart) {
+
+    return cart.reduce((sum, product) => {
+
+        return sum + Number(product.price) * Number(product.quantity);
+
+    }, 0);
+
+}
+
+function displayCart() {
+
+    const cartItems = document.getElementById("cart-items");
+    const totalElement = document.getElementById("total");
+
+    const cart = getCart();
+
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+
+        cartItems.textContent = "Your cart is empty! 🌷";
+        totalElement.textContent = "Total: Rs. 0";
+
+        return;
+
+    }
+
+    cart.forEach((product, index) => {
+
+        const item = document.createElement("div");
+        item.className = "cart-item";
+
+        const details = document.createElement("div");
+
+        const title = document.createElement("h3");
+        title.textContent = product.name;
+
+        const price = document.createElement("p");
+        price.textContent = "Price: Rs. " + product.price;
+
+        const quantity = document.createElement("p");
+        quantity.textContent = "Quantity: " + product.quantity;
+
+        const subtotal = document.createElement("p");
+
+        subtotal.textContent =
+            "Subtotal: Rs. " +
+            (Number(product.price) * Number(product.quantity));
+
+        details.append(title, price, quantity, subtotal);
+
+        const removeButton = document.createElement("button");
+
+        removeButton.type = "button";
+        removeButton.className = "remove-btn";
+        removeButton.textContent = "Remove";
+
+        removeButton.addEventListener("click", () => {
+
+            const updatedCart = getCart();
+
+            updatedCart.splice(index, 1);
+
+            saveCart(updatedCart);
+
+            displayCart();
+
+        });
+
+        item.append(details, removeButton);
+
+        cartItems.appendChild(item);
+
+    });
+
+    totalElement.textContent =
+        "Total Including Delivery: Rs. " +
+        (calculateSubtotal(cart) + 200);
+
+}
+
+function openOrderForm() {
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+
+        alert("Please add products to your cart first! 🌷");
+
+        return;
+
+    }
+
+    const orderForm = document.getElementById("orderForm");
+
+    const orderSummary = document.getElementById("orderSummary");
+
+    orderSummary.innerHTML = "";
+
+    cart.forEach(product => {
+
+        const line = document.createElement("p");
+
+        line.textContent =
+            product.name + " × " + product.quantity +
+            " = Rs. " +
+            (Number(product.price) * Number(product.quantity));
+
+        orderSummary.appendChild(line);
+
+    });
+
+    document.getElementById("orderTotal").textContent =
+        "Total: Rs. " + (calculateSubtotal(cart) + 200);
+
+    orderForm.style.display = "block";
+
+    orderForm.scrollIntoView({ behavior: "smooth" });
+
+}
+
+document.getElementById("checkoutForm").addEventListener(
+
+    "submit",
+
+    async function(event) {
+
+        event.preventDefault();
+
+        const cart = getCart();
+
+        if (cart.length === 0) {
+
+            alert("Your cart is empty! 🌷");
+
+            return;
+
+        }
+
+        if (typeof emailjs === "undefined") {
+
+            alert("Email service load nahi hui. Internet check karke page refresh karo.");
+
+            return;
+
+        }
+
+        const button = document.getElementById("confirmBtn");
+
+        button.disabled = true;
+
+        button.textContent = "Sending Order...";
+
+        const order = {
+
+            customer_name:
+                document.getElementById("customerName").value.trim(),
+
+            phone:
+                document.getElementById("phone").value.trim(),
+
+            customer_email:
+                document.getElementById("email").value.trim(),
+
+            address:
+                document.getElementById("address").value.trim(),
+
+            order_details: cart.map(product =>
+
+                product.name + " × " + product.quantity +
+                " = Rs. " +
+                (Number(product.price) * Number(product.quantity))
+
+            ).join("\n"),
+
+            delivery: 200,
+
+            total: calculateSubtotal(cart) + 200
+
+        };
+
+        try {
+
+            emailjs.init({ publicKey: PUBLIC_KEY });
+
+            await emailjs.send(SERVICE_ID, TEMPLATE_ID, order);
+
+            alert("Your order email was sent successfully! 🌷");
+
+            localStorage.removeItem("loopCart");
+
+            document.getElementById("checkoutForm").reset();
+
+            document.getElementById("orderForm").style.display = "none";
+
+            displayCart();
+
+        } catch (error) {
+
+            console.error("EmailJS error:", error);
+
+            alert("Email send nahi hui. EmailJS settings check karo.");
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent = "Confirm Order 💕";
+
+        }
+
+    }
+
+);
+
+displayCart();
+
+</script>
+
+</body>
+</html>

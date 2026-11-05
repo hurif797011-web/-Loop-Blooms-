@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | Loop & Blooms</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff9f6;
+    color: #63444b;
+}
+
+header {
+    background: #f7e2e5;
+    text-align: center;
+    padding: 25px;
+}
+
+header h1 {
+    color: #914d66;
+    font-size: 38px;
+    font-weight: normal;
+}
+
+nav {
+    background: #914d66;
+    padding: 13px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 12px;
+}
+
+.profile-container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #efd5d5;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px #eadada;
+    text-align: center;
+}
+
+.profile-container h2 {
+    color: #914d66;
+    margin-bottom: 25px;
+}
+
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #f7e2e5;
+    background: #f9e9e9;
+    margin-bottom: 15px;
+}
+
+.upload-label {
+    display: inline-block;
+    background: #914d66;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.field {
+    text-align: left;
+    margin: 18px 0;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.field input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d9a9b5;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #a45d70;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 22px;
+    cursor: pointer;
+    margin: 8px;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #7d4052;
+}
+
+#message {
+    margin: 15px 0;
+    color: #914d66;
+}
+
+.section {
+    margin-top: 35px;
+    padding-top: 20px;
+    border-top: 1px solid #efd5d5;
+    text-align: left;
+}
+
+.section h3 {
+    color: #914d66;
+    margin-bottom: 15px;
+}
+
+.review-item {
+    padding: 12px;
+    border: 1px solid #efd5d5;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+@media(max-width: 600px) {
+    .profile-container {
+        margin: 20px 12px;
+        padding: 22px 16px;
+    }
+
+    header h1 {
+        font-size: 29px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 7px;
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌷 Loop & Blooms 🌷</h1>
+    <p>My Account</p>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="home.html">Shopping</a>
+    <a href="cart.html">Cart 🛒</a>
+</nav>
+
+<div class="profile-container">
+
+    <h2>My Profile ♡</h2>
+
+    <img id="profilePic" class="profile-pic"
+         src="https://placehold.co/130x130/f7e2e5/914d66?text=Profile"
+         alt="Profile picture">
+
+    <br>
+
+    <label for="photoInput" class="upload-label">
+        Change Profile Picture
+    </label>
+
+    <input type="file" id="photoInput" accept="image/*">
+
+    <div class="field">
+        <label>Your Name</label>
+        <input type="text" id="nameInput" placeholder="Enter your name">
+    </div>
+
+    <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="emailInput" disabled>
+    </div>
+
+    <button id="saveButton">Save Profile 💗</button>
+
+    <p id="message"></p>
+
+    <div class="section">
+        <h3>My Orders 🛍️</h3>
+        <p id="ordersMessage">Your orders will appear here.</p>
+    </div>
+
+    <div class="section">
+        <h3>My Reviews ⭐</h3>
+        <div id="myReviews">Loading reviews...</div>
+    </div>
+
+    <button id="logoutButton">Logout</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://hjequwxxnmcthftreacg.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Aho6yRQjPyOHFks420R7ZQ_x6cg_6-K";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let currentUser = null;
+let selectedPhoto = null;
+
+const nameInput = document.getElementById("nameInput");
+const emailInput = document.getElementById("emailInput");
+const profilePic = document.getElementById("profilePic");
+const message = document.getElementById("message");
+const photoInput = document.getElementById("photoInput");
+
+async function loadProfile() {
+
+    const { data, error } = await supabaseClient.auth.getUser();
+
+    if (error || !data.user) {
+        message.textContent =
+            "Please login to view and edit your profile.";
+        document.getElementById("myReviews").textContent =
+            "Login required to view reviews.";
+        document.getElementById("saveButton").disabled = true;
+        photoInput.disabled = true;
+        return;
+    }
+
+    currentUser = data.user;
+
+    nameInput.value =
+        currentUser.user_metadata?.display_name || "";
+
+    emailInput.value = currentUser.email || "";
+
+    if (currentUser.user_metadata?.avatar_url) {
+        profilePic.src = currentUser.user_metadata.avatar_url;
+    }
+
+    loadMyReviews();
+}
+
+photoInput.addEventListener("change", () => {
+
+    const file = photoInput.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        message.textContent = "Please select an image.";
+        photoInput.value = "";
+        return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+        message.textContent = "Image must be smaller than 3 MB.";
+        photoInput.value = "";
+        return;
+    }
+
+    selectedPhoto = file;
+    profilePic.src = URL.createObjectURL(file);
+    message.textContent = "Photo selected. Click Save Profile.";
+});
+
+document.getElementById("saveButton").addEventListener("click", async () => {
+
+    if (!currentUser) {
+        message.textContent = "Please login first.";
+        return;
+    }
+
+    const name = nameInput.value.trim();
+
+    if (!name) {
+        message.textContent = "Please enter your name.";
+        return;
+    }
+
+    message.textContent = "Saving...";
+
+    let avatarUrl = currentUser.user_metadata?.avatar_url || "";
+
+    if (selectedPhoto) {
+
+        const extension = selectedPhoto.name.split(".").pop();
+
+        const filePath =
+            currentUser.id + "/" + Date.now() + "." + extension;
+
+        const { error: uploadError } = await supabaseClient
+            .storage
+            .from("avatars")
+            .upload(filePath, selectedPhoto, {
+                contentType: selectedPhoto.type
+            });
+
+        if (uploadError) {
+            message.textContent = uploadError.message;
+            return;
+        }
+
+        const { data } = supabaseClient
+            .storage
+            .from("avatars")
+            .getPublicUrl(filePath);
+
+        avatarUrl = data.publicUrl;
+    }
+
+    const { error } = await supabaseClient.auth.updateUser({
+        data: {
+            display_name: name,
+            avatar_url: avatarUrl
+        }
+    });
+
+    if (error) {
+        message.textContent = error.message;
+        return;
+    }
+
+    selectedPhoto = null;
+    message.textContent = "Profile saved successfully! 💗";
+});
+
+async function loadMyReviews() {
+
+    const reviewBox = document.getElementById("myReviews");
+
+    const { data, error } = await supabaseClient
+        .from("reviews")
+        .select("*")
+        .eq("user_id", currentUser.id)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        reviewBox.textContent = "Could not load reviews.";
+        return;
+    }
+
+    reviewBox.innerHTML = "";
+
+    if (data.length === 0) {
+        reviewBox.textContent = "You haven't written any reviews yet.";
+        return;
+    }
+
+    data.forEach(review => {
+
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        const product = document.createElement("strong");
+        product.textContent = review.product_name;
+
+        const stars = document.createElement("p");
+        stars.textContent =
+            "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+        const comment = document.createElement("p");
+        comment.textContent = review.review_text;
+
+        item.append(product, stars, comment);
+        reviewBox.appendChild(item);
+    });
+}
+
+document.getElementById("logoutButton").addEventListener("click", async () => {
+
+    await supabaseClient.auth.signOut();
+    window.location.replace("login.html");
+
+});
+
+loadProfile();
+</script>
+
+</body>
+</html>
