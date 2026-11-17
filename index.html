@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Loop & Blooms | Handmade Crochet</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff9f6;
+            color: #63444b;
+        }
+
+        /* BRAND HEADING */
+
+        header {
+            background-color: #f7e2e5;
+            text-align: center;
+            padding: 30px 15px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 55px;
+            font-weight: normal;
+            color: #914d66;
+        }
+
+        header p {
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            color: #805460;
+        }
+
+        /* LOGIN BUTTON */
+
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: #914d66;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #71364e;
+        }
+
+        /* NAVIGATION BAR */
+
+        nav {
+            background: #914d66;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background: #ebb4c6;
+            color: #914d66;
+        }
+
+        /* HOME SECTION */
+
+        .hero {
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 55px 20px;
+            background: linear-gradient(
+                135deg,
+                #fff5f2,
+                #f9e4e9,
+                #fffaf6
+            );
+        }
+
+        .hero .small-title {
+            color: #a16b7d;
+            font-size: 15px;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .hero h2 {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            color: #914d66;
+            margin-bottom: 22px;
+            line-height: 1.3;
+        }
+
+        .hero .description {
+            max-width: 650px;
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        /* SHOP NOW BUTTON */
+
+        .shop-button {
+            display: inline-block;
+            background-color: #914d66;
+            color: white;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .shop-button:hover {
+            background-color: #71364e;
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background-color: #914d66;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            line-height: 1.8;
+        }
+
+        footer p {
+            font-size: 13px;
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 65px 10px 20px;
+            }
+
+            header h1 {
+                font-size: clamp(28px, 8vw, 38px);
+                overflow-wrap: anywhere;
+            }
+
+            header p {
+                font-size: 10px;
+                letter-spacing: 1px;
+                line-height: 1.8;
+            }
+
+            .login-button {
+                top: 12px;
+                right: 12px;
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            nav {
+                gap: 5px;
+                padding: 8px 5px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 9px 10px;
+                text-align: center;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 55px 18px;
+            }
+
+            .hero .small-title {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+                line-height: 1.8;
+                margin-bottom: 15px;
+            }
+
+            .hero h2 {
+                font-size: clamp(27px, 7vw, 32px);
+                line-height: 1.35;
+                margin-bottom: 18px;
+            }
+
+            .hero .description {
+                font-size: 14px;
+                line-height: 1.8;
+                margin-bottom: 24px;
+            }
+
+            .shop-button {
+                max-width: 100%;
+                padding: 13px 26px;
+                font-size: 15px;
+            }
+
+            footer {
+                padding: 20px 12px;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+
+        /* EXTRA SMALL MOBILE SCREENS */
+
+        @media (max-width: 360px) {
+
+            header h1 {
+                font-size: 27px;
+            }
+
+            nav {
+                gap: 3px;
+            }
+
+            nav a {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            .hero {
+                padding: 40px 14px;
+            }
+
+            .hero h2 {
+                font-size: 26px;
+            }
+
+            .hero .description {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- WEBSITE HEADER -->
+
+    <header>
+
+        <a href="login.html" class="login-button" id="loginButton">
+            Login
+        </a>
+
+        <h1>🌷 𝙻𝚘𝚘𝚙 & 𝙱𝚕𝚘𝚘𝚖🌷</h1>
+
+        <p>♡HANDMADE WITH LOVE, ONE LOOP AT A TIME,STITCH WITH LOVE AND CARE♡</p>
+
+    </header>
+
+    <!-- NAVIGATION BAR -->
+
+    <nav>
+        <a href="index.html">Home</a>
+
+        <a href="about.html">About Us</a>
+
+        <a href="home.html">Shopping</a>
+
+        <a href="crochet.html">Customize Products</a>
+
+        <a href="caart.html">Cart 🛒</a>
+    </nav>
+
+    <!-- HOME / HERO SECTION -->
+
+    <section class="hero">
+
+        <p class="small-title">
+            WELCOME TO OUR LITTLE CROCHET WORLD
+        </p>
+
+        <h2>
+            Handmade with Love,<br>
+            Made Just for You ♡
+        </h2>
+
+        <p class="description">
+            Welcome to Loop &amp; Blooms, where every little loop
+            becomes something beautiful! We create lovely handmade
+            crochet flowers, bags, accessories and adorable gifts.
+            Each creation is made with creativity, patience and love.
+        </p>
+
+        <a href="home.html" class="shop-button">
+            Shop Now 🌷
+        </a>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <p>🌷 Loop &amp; Blooms 🌷</p>
+
+        <p>Handmade with Love ♡</p>
+
+        <p>&copy; 2026 Loop &amp; Blooms. All Rights Reserved.</p>
+    </footer>
+
+    <!-- LOGIN / PROFILE BUTTON STATUS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const SUPABASE_URL = "https://hjequwxxnmcthftreacg.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_Aho6yRQjPyOHFks420R7ZQ_x6cg_6-K";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+        const loginButton = document.getElementById("loginButton");
+
+        supabaseClient.auth.getSession().then(({ data }) => {
+
+            if (data.session) {
+                loginButton.textContent = "My Profile";
+                loginButton.href = "profile.html";
+            } else {
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html";
+            }
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop & Blooms | Handmade Crochet</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8f5;
+            color: #543b3b;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #f7e2e5;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        header h1 {
+            font-size: 55px;
+            font-weight: normal;
+            color: #914d66;
+            line-height: 1.4;
+        }
+
+        header p {
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            color: #805460;
+            line-height: 1.8;
+        }
+
+        nav {
+            background: #914d66;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background: #ebb4c6;
+            color: #914d66;
+        }
+
+        .welcome {
+            text-align: center;
+            padding: 35px 15px;
+        }
+
+        .welcome h2 {
+            color: #a45d70;
+            font-size: 30px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .welcome p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+            padding: 25px;
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #efd5d5;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px #eadada;
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f9e9e9;
+            border: 2px dashed #d9a9b5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .price {
+            color: #a45d70;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .add-cart {
+            background: #a45d70;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            max-width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .add-cart:hover {
+            background: #7d4052;
+        }
+
+        .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity button {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border: none;
+            border-radius: 5px;
+            background: #f4d8d8;
+            color: #543b3b;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .qty {
+            min-width: 15px;
+        }
+
+        .reviews {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0d5df;
+            text-align: left;
+        }
+
+        .reviews h4 {
+            color: #914d66;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .star-rating {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .star-rating button {
+            background: none;
+            border: none;
+            font-size: 27px;
+            color: #ccc;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .star-rating button.selected {
+            color: #ffc107;
+        }
+
+        .review-input {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            border: 1px solid #e3b8c6;
+            border-radius: 7px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin-bottom: 10px;
+            outline-color: #914d66;
+        }
+
+        textarea.review-input {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .submit-review {
+            background: #914d66;
+            color: white;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-review:hover {
+            background: #71364e;
+        }
+
+        .review-message {
+            font-size: 13px;
+            margin: 8px 0;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .review-item {
+            background: #fff4f6;
+            border-radius: 7px;
+            padding: 10px;
+            margin-top: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .review-item .review-stars {
+            color: #e5a900;
+            margin-bottom: 5px;
+        }
+
+        .review-item p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        a.loop {
+            background: #914d66;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            text-align: center;
+            width: fit-content;
+            max-width: calc(100% - 30px);
+            border: 1px solid #914d66;
+            font-weight: bold;
+            transition: 0.3s;
+            display: block;
+            text-decoration: none;
+            margin: 25px auto;
+        }
+
+        a.loop:hover {
+            background: #71364e;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            header {
+                padding: 25px 12px;
+            }
+
+            header h1 {
+                font-size: 42px;
+            }
+
+            header p {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            nav {
+                gap: 8px;
+            }
+
+            nav a {
+                padding: 9px 11px;
+                font-size: 14px;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px 10px;
+            }
+
+            header h1 {
+                font-size: clamp(27px, 7.5vw, 38px);
+                line-height: 1.4;
+                overflow-wrap: anywhere;
+            }
+
+            header p {
+                font-size: 10px;
+                letter-spacing: 1px;
+                line-height: 1.8;
+            }
+
+            nav {
+                gap: 5px;
+                padding: 8px 5px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 9px 10px;
+                text-align: center;
+            }
+
+            .welcome {
+                padding: 28px 15px;
+            }
+
+            .welcome h2 {
+                font-size: 25px;
+            }
+
+            .welcome p {
+                font-size: 14px;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .product-card {
+                padding: 10px;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-card h3 {
+                font-size: 15px;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+
+            .add-cart {
+                padding: 9px 10px;
+                font-size: 12px;
+            }
+
+            .quantity {
+                gap: 8px;
+            }
+
+            .reviews {
+                margin-top: 15px;
+                padding-top: 12px;
+            }
+
+            .reviews h4 {
+                font-size: 14px;
+            }
+
+            .star-rating {
+                gap: 3px;
+            }
+
+            .star-rating button {
+                font-size: 23px;
+            }
+
+            .review-input {
+                font-size: 13px;
+                padding: 9px;
+            }
+
+            .submit-review {
+                padding: 9px 10px;
+                font-size: 12px;
+            }
+
+            a.loop {
+                padding: 10px 18px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 380px) {
+            nav {
+                gap: 3px;
+            }
+
+            nav a {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 18px;
+            }
+
+            .product-card {
+                padding: 15px;
+            }
+
+            .product-image {
+                height: 220px;
+            }
+
+            .product-card h3 {
+                font-size: 17px;
+            }
+
+            .price {
+                font-size: 15px;
+            }
+
+            .add-cart {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+
+            .star-rating button {
+                font-size: 26px;
+            }
+
+            .submit-review {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🌷 𝙻𝚘𝚘𝚙 & 𝙱𝚕𝚘𝚘𝚖 🌷</h1>
+        <p>♡HANDMADE WITH LOVE, ONE LOOP AT A TIME, STITCH WITH LOVE AND CARE♡</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="home.html">Shopping</a>
+        <a href="crochet.html">Customize Products</a>
+        <a href="caart.html">Cart 🛒</a>
+    </nav>
+
+    <section class="welcome" id="home">
+        <h2>Welcome to Loop & Blooms!</h2>
+        <p>Beautiful handmade crochet creations, made with love.</p>
+        <p>Every stitch tells a little story. 🌸</p>
+    </section>
+
+    <section class="products" id="shopping">
+        <!-- Products will be added here by JavaScript -->
+    </section>
+
+    <a href="about.html" class="loop">Learn More 🌷</a>
+
+    <script>
+        /* PRODUCT INFORMATION */
+
+        const products = [
+            {
+                name: "Crochet Flower",
+                price: 500,
+                image: "rose.jpg"
+            },
+            {
+                name: "Crochet Bouquet",
+                price: 2000,
+                image: "White Tulip Bouquet Crochet Pattern _ Beginner Friendly Flower Tutorial (Digital Download).jpg"
+            },
+            {
+                name: "Crochet Bag",
+                price: 3000,
+                image: "dhumk8y.jpg"
+            },
+            {
+                name: "Crochet Keychain",
+                price: 250,
+                image: "images.jpg"
+            },
+            {
+                name: "Crochet Teddy",
+                price: 900,
+                image: "images (1).jpg"
+            },
+            {
+                name: "Crochet Hairband",
+                price: 450,
+                image: "blooo.jpg"
+            },
+            {
+                name: "Crochet Coaster",
+                price: 470,
+                image: "tulip crochet coasters 🌷.jpg"
+            },
+            {
+                name: "Crochet Plushie",
+                price: 2500,
+                image: "lkjhgfc.jpg"
+            },
+            {
+                name: "Crochet Shoes",
+                price: 1000,
+                image: "rttttttttttttttttttt.JPG"
+            },
+            {
+                name: "Crochet Bandana",
+                price: 650,
+                image: "images (2).jpg"
+            }
+        ];
+
+        const productsContainer = document.querySelector(".products");
+
+        /* CREATE PRODUCT CARDS */
+
+        products.forEach((product, index) => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.dataset.name = product.name;
+            card.dataset.price = product.price;
+
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+
+                <h3>${product.name}</h3>
+                <p class="price">Rs. ${product.price}</p>
+
+                <button type="button" class="add-cart">
+                    Add to Cart
+                </button>
+
+                <div class="quantity">
+                    <button type="button" class="minus" aria-label="Decrease quantity">−</button>
+                    <span class="qty">1</span>
+                    <button type="button" class="plus" aria-label="Increase quantity">+</button>
+                </div>
+
+                <div class="reviews">
+                    <h4>Customer Reviews ⭐</h4>
+
+                    <div class="star-rating" aria-label="Choose a rating">
+                        <button type="button" data-rating="1" aria-label="1 star">★</button>
+                        <button type="button" data-rating="2" aria-label="2 stars">★</button>
+                        <button type="button" data-rating="3" aria-label="3 stars">★</button>
+                        <button type="button" data-rating="4" aria-label="4 stars">★</button>
+                        <button type="button" data-rating="5" aria-label="5 stars">★</button>
+                    </div>
+
+                    <textarea
+                        class="review-input"
+                        placeholder="Write your comment..."
+                        maxlength="300"
+                        aria-label="Write your review"
+                    ></textarea>
+
+                    <button type="button" class="submit-review">
+                        Submit Review
+                    </button>
+
+                    <p class="review-message" aria-live="polite"></p>
+                    <div class="review-list"></div>
+                </div>
+            `;
+
+            productsContainer.appendChild(card);
+        });
+
+        /* QUANTITY AND ADD TO CART */
+
+        function getCart() {
+            try {
+                const savedCart = JSON.parse(localStorage.getItem("loopCart"));
+                return Array.isArray(savedCart) ? savedCart : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem("loopCart", JSON.stringify(cart));
+        }
+
+        document.querySelectorAll(".product-card").forEach(card => {
+            const plusButton = card.querySelector(".plus");
+            const minusButton = card.querySelector(".minus");
+            const addButton = card.querySelector(".add-cart");
+            const quantityDisplay = card.querySelector(".qty");
+
+            let quantity = 1;
+
+            plusButton.addEventListener("click", () => {
+                quantity++;
+                quantityDisplay.textContent = quantity;
+            });
+
+            minusButton.addEventListener("click", () => {
+                if (quantity > 1) {
+                    quantity--;
+                    quantityDisplay.textContent = quantity;
+                }
+            });
+
+            addButton.addEventListener("click", () => {
+                const name = card.dataset.name;
+                const price = Number(card.dataset.price);
+                const cart = getCart();
+
+                const existingProduct = cart.find(
+                    item => item.name === name
+                );
+
+                if (existingProduct) {
+                    existingProduct.quantity += quantity;
+                } else {
+                    cart.push({
+                        name: name,
+                        price: price,
+                        quantity: quantity
+                    });
+                }
+
+                saveCart(cart);
+
+                alert(name + " added to your cart! 🛒");
+
+                quantity = 1;
+                quantityDisplay.textContent = quantity;
+            });
+        });
+
+        /* LOAD SAVED REVIEWS */
+
+        function loadSavedReviews() {
+            document.querySelectorAll(".product-card").forEach(card => {
+                const productName = card.dataset.name;
+                const reviewList = card.querySelector(".review-list");
+
+                const savedReviews = JSON.parse(
+                    localStorage.getItem("reviews_" + productName) || "[]"
+                );
+
+                savedReviews.forEach(saved => {
+                    const review = document.createElement("div");
+                    review.className = "review-item";
+
+                    const rating = document.createElement("div");
+                    rating.className = "review-stars";
+                    rating.textContent =
+                        "★".repeat(saved.rating) + "☆".repeat(5 - saved.rating);
+
+                    const text = document.createElement("p");
+                    text.textContent = saved.comment;
+
+                    review.append(rating, text);
+                    reviewList.appendChild(review);
+                });
+            });
+        }
+
+        loadSavedReviews();
+
+        /* CUSTOMER REVIEWS */
+
+        document.querySelectorAll(".product-card").forEach(card => {
+            const stars = card.querySelectorAll(".star-rating button");
+            const commentBox = card.querySelector(".review-input");
+            const submitButton = card.querySelector(".submit-review");
+            const message = card.querySelector(".review-message");
+            const reviewList = card.querySelector(".review-list");
+
+            let selectedRating = 0;
+
+            stars.forEach(star => {
+                star.addEventListener("click", () => {
+                    selectedRating = Number(star.dataset.rating);
+
+                    stars.forEach(item => {
+                        item.classList.toggle(
+                            "selected",
+                            Number(item.dataset.rating) <= selectedRating
+                        );
+                    });
+                });
+            });
+
+            submitButton.addEventListener("click", () => {
+                const comment = commentBox.value.trim();
+
+                if (selectedRating === 0) {
+                    message.textContent = "Please select a star rating.";
+                    return;
+                }
+
+                if (comment === "") {
+                    message.textContent = "Please write a comment.";
+                    return;
+                }
+
+                const review = document.createElement("div");
+                review.className = "review-item";
+
+                const rating = document.createElement("div");
+                rating.className = "review-stars";
+                rating.textContent =
+                    "★".repeat(selectedRating) +
+                    "☆".repeat(5 - selectedRating);
+
+                const text = document.createElement("p");
+                text.textContent = comment;
+
+                review.appendChild(rating);
+                review.appendChild(text);
+                reviewList.prepend(review);
+
+                const productName = card.dataset.name;
+                const storageKey = "reviews_" + productName;
+
+                const savedReviews = JSON.parse(
+                    localStorage.getItem(storageKey) || "[]"
+                );
+
+                savedReviews.unshift({
+                    rating: selectedRating,
+                    comment: comment
+                });
+
+                localStorage.setItem(storageKey, JSON.stringify(savedReviews));
+
+                selectedRating = 0;
+
+                stars.forEach(star => {
+                    star.classList.remove("selected");
+                });
+
+                commentBox.value = "";
+                message.textContent = "Thank you for your review! 💗";
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    header {
+    background-color: #f7e2e5;
+    text-align: center;
+    padding: 15px;
+}
+
+header h1 {
+    font-size: 55px;
+    font-weight: normal;
+    color: #914d66;
+    margin: 10px 0;
+}
+
+header p {
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin: 8px 0 5px;
+    color: #805460;
+}
+
+body {
+    background-color: #fff9f6;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background: #914d66;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background: #ebb4c6;
+    color: #914d66;
+}
+
+.hobby {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 850px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.hobby .highlight {
+    color: #914d66;
+    font-weight: bold;
+}
+
+.hobby h2 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: #914d66;
+    margin-bottom: 22px;
+}
+
+.hobby p {
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 15px;
+}
+
+.divider {
+    width: 80px;
+    height: 3px;
+    background-color: #d7a0b0;
+    margin: 25px auto;
+    border-radius: 5px;
+}
+
+button {
+    display: inline-block;
+    background-color: #914d66;
+    color: white;
+    text-decoration: none;
+    padding: 15px 35px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #71364e;
+    transform: translateY(-3px);
+}
+
+.shop-button {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.kittie {
+    color: #71364e;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+    header {
+        padding: 20px 10px;
+    }
+
+    header h1 {
+        font-size: clamp(27px, 7.5vw, 38px);
+        overflow-wrap: anywhere;
+        line-height: 1.4;
+    }
+
+    header p {
+        font-size: 10px;
+        letter-spacing: 1px;
+        line-height: 1.8;
+    }
+
+    nav {
+        gap: 5px;
+        padding: 8px 5px;
+    }
+
+    nav a {
+        font-size: 12px;
+        padding: 9px 10px;
+        text-align: center;
+    }
+
+    .hobby {
+        padding: 40px 18px;
+        width: 100%;
+    }
+
+    .hobby h2 {
+        font-size: 26px;
+        line-height: 1.4;
+    }
+
+    .hobby p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .divider {
+        margin: 20px auto;
+    }
+
+    .shop-button button {
+        max-width: 100%;
+        padding: 13px 22px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    .kittie {
+        line-height: 1.8;
+    }
+}
+
+/* EXTRA SMALL MOBILE SCREENS */
+@media (max-width: 360px) {
+    header h1 {
+        font-size: 26px;
+    }
+
+    nav {
+        gap: 3px;
+    }
+
+    nav a {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .hobby {
+        padding: 30px 14px;
+    }
+
+    .hobby h2 {
+        font-size: 24px;
+    }
+
+    .hobby p {
+        font-size: 13px;
+    }
+
+    .shop-button button {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+}
+        
+</style>
+<body>
+      <header>
+        <h1>🌷 𝙻𝚘𝚘𝚙 & 𝙱𝚕𝚘𝚘𝚖 🌷</h1>
+        <p>♡HANDMADE WITH LOVE, ONE LOOP AT A TIME,STITCH WITH LOVE AND CARE♡</p>
+    </header>
+     <nav>
+        <a href="index.html">Home</a>
+
+        <a href="about.html">About Us</a>
+
+        <a href="home.html">Shopping</a>
+
+        <a href="crochet.html">Customize Products</a>
+
+        <a href="caart.html">Cart 🛒</a>
+    </nav>
+  
+
+
+    
+    <!-- OUR HOBBY SECTION -->
+
+    <section class="hobby">
+
+        <h2>A Little Hobby, A Lot of Love</h2>
+
+        <div class="divider"></div>
+
+        <p>
+            Crochet started as our little hobby, a fun way to express
+            creativity and turn simple yarn into something special.
+        </p>
+
+        <p>
+            We love making cute, colourful and unique handmade things.
+            Every flower, bag and little creation carries a piece of
+            our imagination and care.
+        </p>
+
+        <p>
+            At <span class="highlight">Loop &amp; Blooms</span>,
+            we share our hobby with you by offering our handmade
+            creations for sale, simply because we love creating
+            beautiful things and making people happy.
+        </p>
+
+        <p>
+            Every piece is handmade, so each creation has its own
+            special charm. Thank you for supporting our little
+            creative journey!
+        </p>
+        <p  class="kittie">💕If you want to buy your costomized stuff material click the following button💕 </p>
+
+        <a href="crochet.html" class="shop-button">
+         <button>  coustomized idea </button>
+        </a>
+
+    </section>
+</body>
+</html>

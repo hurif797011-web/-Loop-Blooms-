@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Loop & Blooms</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff8f5;
+            color: #63444b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            width: 320px;
+            max-width: calc(100% - 60px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #eadada;
+            text-align: center;
+        }
+
+        h1 {
+            color: #914d66;
+        }
+
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #d9a9b5;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            background: #a45d70;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #7d4052;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        #message {
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h1>🌷 Loop & Blooms</h1>
+
+        <h2 id="formTitle">Create Account</h2>
+
+        <form id="authForm">
+
+            <input id="email" type="email"
+                placeholder="Email address" required>
+
+            <input id="password" type="password"
+                placeholder="Password (at least 6 characters)"
+                minlength="6" required>
+
+            <button id="submitButton" type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="message" role="status"></p>
+
+        <p id="switchText">
+            Already have an account?
+            <a href="#" id="switchMode">Login</a>
+        </p>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://hjequwxxnmcthftreacg.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_Aho6yRQjPyOHFks420R7ZQ_x6cg_6-K";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+        let isLogin = false;
+
+        const form = document.getElementById("authForm");
+
+        const message = document.getElementById("message");
+
+        const submitButton = document.getElementById("submitButton");
+
+        const formTitle = document.getElementById("formTitle");
+
+        const switchText = document.getElementById("switchText");
+
+
+        function updateFormMode() {
+
+            formTitle.textContent =
+                isLogin ? "Login" : "Create Account";
+
+            submitButton.textContent =
+                isLogin ? "Login" : "Create Account";
+
+            switchText.replaceChildren(
+                document.createTextNode(
+                    isLogin
+                        ? "Need an account? "
+                        : "Already have an account? "
+                )
+            );
+
+            const link = document.createElement("a");
+
+            link.href = "#";
+
+            link.id = "switchMode";
+
+            link.textContent =
+                isLogin ? "Create Account" : "Login";
+
+            switchText.appendChild(link);
+
+        }
+
+
+        switchText.addEventListener("click", function(event) {
+
+            if (event.target.id !== "switchMode") return;
+
+            event.preventDefault();
+
+            isLogin = !isLogin;
+
+            message.textContent = "";
+
+            updateFormMode();
+
+        });
+
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            submitButton.disabled = true;
+
+            message.textContent = "Please wait...";
+
+            try {
+
+                if (isLogin) {
+
+                    const { data, error } =
+                        await supabaseClient.auth.signInWithPassword({
+
+                            email: email,
+
+                            password: password
+
+                        });
+
+                    if (error) throw error;
+
+                    if (data.session) {
+
+                        message.textContent =
+                            "Login successful! Opening Home page...";
+
+                        // Correct Home page redirect
+                        window.location.href = "index.html";
+
+                    } else {
+
+                        message.textContent =
+                            "Please confirm your email first.";
+
+                    }
+
+                } else {
+
+                    const { data, error } =
+                        await supabaseClient.auth.signUp({
+
+                            email: email,
+
+                            password: password
+
+                        });
+
+                    if (error) throw error;
+
+                    if (data.session) {
+
+                        message.textContent =
+                            "Account created successfully!";
+
+                        window.location.href = "index.html";
+
+                    } else {
+
+                        message.textContent =
+                            "Account created! Check your email to confirm your account.";
+
+                    }
+
+                }
+
+            } catch (error) {
+
+                message.textContent =
+                    error.message || "Something went wrong.";
+
+            } finally {
+
+                submitButton.disabled = false;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
